@@ -19,7 +19,7 @@ const Sociallogin = () => {
                 onClick={handleGoogle}
                 className="btn w-full">
                 <FaGoogle />
-                SignUp with Google
+                Google
             </button>
         </div>
     );
