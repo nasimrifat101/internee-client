@@ -3,13 +3,28 @@ import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
 
-    const {user, logout} = useAuth()
+    const { user, logout } = useAuth()
+    const isPremium = false
 
 
     const navlinks = <>
-        <li><NavLink to='/'>Home</NavLink></li>
-        <li><NavLink to='/internships'>Internships</NavLink></li>
-        <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
+        <li><NavLink to='/' className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "text-[#4aed8b] line-through" : ""
+            }>Home</NavLink></li>
+        <li><NavLink to='/internships' className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "text-[#4aed8b] line-through" : ""
+            }>Internships</NavLink></li>
+        <li><NavLink to='/jobs' className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "text-[#4aed8b] line-through" : ""
+            }>Jobs</NavLink></li>
+        {
+            isPremium && <li><NavLink to='/recommended' className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-[#4aed8b] line-through" : ""
+          }>Recommended</NavLink></li>
+        }
+        <li><NavLink to='/dashboard' className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "text-[#4aed8b] line-through" : ""
+            }>Dashboard</NavLink></li>
     </>
     return (
         <div>
@@ -32,12 +47,12 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end">
                     {
-                        user? 
-                        <NavLink to='/login' onClick={() => logout()} className="btn">Logout</NavLink>
-                        :
-                        <NavLink to='/login' className="btn">Login</NavLink>
+                        user ?
+                            <NavLink to='/login' onClick={() => logout()} className="btn">Logout</NavLink>
+                            :
+                            <NavLink to='/login' className="btn">Login</NavLink>
                     }
-                
+
                 </div>
             </div>
         </div>
