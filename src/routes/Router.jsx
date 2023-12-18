@@ -8,6 +8,7 @@ import Dashboard from "../layout/Dashboard";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import { AllEmployer, AllJobs, Approve, BannedEmp, BannedUsers, MyEmp, Stats } from "../pages/Dashboard/Admin";
 import { Internships, Jobs, Recomended } from "../pages/components/pages";
+import PrivateRoute from "../providers/PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -35,11 +36,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/jobs',
-        element: <Jobs></Jobs>
+        element: <PrivateRoute><Jobs></Jobs></PrivateRoute>
       },
       {
         path: '/internships',
-        element: <Internships></Internships>
+        element: <PrivateRoute><Internships></Internships></PrivateRoute>
       },
 
       // dashboard
