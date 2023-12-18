@@ -10,8 +10,9 @@ import { ToastContainer, toast } from "react-toastify";
 import SocialLogin from "./SocialLogin";
 import useAuth from "../../../hooks/useAuth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage } from "../../../firebase/firebase.config";
+
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { storage } from "../../../firebase/firebase.config";
 
 const SignUp = () => {
     const [isCreatingAccount, setIsCreatingAccount] = useState(false);
@@ -30,7 +31,7 @@ const SignUp = () => {
         try {
             setIsCreatingAccount(true);
             const { name, photo, email, password } = data
-            const photoRef = ref(storage, `photo/${name}-photo.jpg`)
+            const photoRef = ref(storage, `photo/${name}-photo.jpg`);
             await uploadBytes(photoRef, photo[0])
             const imageURL = await getDownloadURL(photoRef)
 
