@@ -4,34 +4,57 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 // import useAuth from "../../Hooks/useAuth";
 import { useState } from "react";
-// import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+
 // import { storage } from "../../Firebase/firebase.config";
 import { ToastContainer, toast } from "react-toastify";
 import SocialLogin from "./SocialLogin";
 import useAuth from "../../../hooks/useAuth";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../firebase/firebase.config";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const SignUp = () => {
     const [isCreatingAccount, setIsCreatingAccount] = useState(false);
-    const {createUser} = useAuth()
+    const { createUser, updateUser } = useAuth()
+    const storageRef = ref(storage, 'photo')
+    const axiosPublic = useAxiosPublic()
     const {
         register,
         formState: { errors },
         handleSubmit,
     } = useForm();
-   
+
 
     const onSubmit = async (data) => {
         console.log(data);
-        setIsCreatingAccount(true);
         try {
-            await createUser(data.email, data.password);
-            toast.success("Account created successfully");
-            setIsCreatingAccount(false);
+            setIsCreatingAccount(true);
+            const { name, photo, email, password } = data
+            const photoRef = ref(storage, `photo/${name}-photo.jpg`)
+            await uploadBytes(photoRef, photo[0])
+            const imageURL = await getDownloadURL(photoRef)
+
+            await createUser(email, password);
+            await updateUser(name, imageURL)
+
+            const userInfo = { name, profile: imageURL, email, password }
+            axiosPublic.post('/users', userInfo)
+                .then(res => {
+                    if (res.data.insertedId) {
+                        toast.success('account created successfully')
+                    } else {
+                        toast.warn('something went wrong')
+                    }
+
+                })
         }
         catch (error) {
             toast.error(error.message);
         }
-       
+        finally {
+            setIsCreatingAccount(false)
+        }
+
     };
 
     return (
