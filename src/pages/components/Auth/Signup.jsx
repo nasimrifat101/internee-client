@@ -8,12 +8,11 @@ import { useState } from "react";
 // import { storage } from "../../Firebase/firebase.config";
 import { ToastContainer, toast } from "react-toastify";
 import SocialLogin from "./SocialLogin";
+import useAuth from "../../../hooks/useAuth";
 
 const SignUp = () => {
-    // const { createAccount, updateUserProfile, googleLogin } = useAuth();
-    // const storageRef = ref(storage, "photo");
-    // const navigate = useNavigate();
     const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+    const {createUser} = useAuth()
     const {
         register,
         formState: { errors },
@@ -23,7 +22,15 @@ const SignUp = () => {
 
     const onSubmit = async (data) => {
         console.log(data);
-
+        setIsCreatingAccount(true);
+        try {
+            await createUser(data.email, data.password);
+            toast.success("Account created successfully");
+            setIsCreatingAccount(false);
+        }
+        catch (error) {
+            toast.error(error.message);
+        }
        
     };
 
@@ -41,7 +48,7 @@ const SignUp = () => {
                     </div>
                     <div className="items-center space-y-2 p-10">
                         <p className="font-semibold text-3xl">SignUp to</p>
-                        <p className="text-3xl lg:text-5xl font-bold text-green-400">InventiSync</p>
+                        <p className="text-3xl lg:text-5xl font-bold text-green-400">Internee</p>
                         <div className="pt-5 space-y-3">
                             <Link to="/">
                                 <button className="btn w-full" aria-label="Go to Home">

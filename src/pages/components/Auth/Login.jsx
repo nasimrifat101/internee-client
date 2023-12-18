@@ -5,9 +5,10 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SocialLogin from "./SocialLogin";
+import useAuth from "../../../hooks/useAuth";
 
 const Login = () => {
-    //   const { loginUser } = useAuth();
+      const { signIn } = useAuth();
     //   const navigate = useNavigate();
     const {
         register,
@@ -19,7 +20,7 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             console.log(data)
-            //   await loginUser(data.email, data.password);
+              await signIn(data.email, data.password);
             //   navigate(location?.state ? location.state : "/");
         } catch (error) {
             console.error("Login failed:", error);

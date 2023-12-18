@@ -1,5 +1,6 @@
-import useAuth from "../../../hooks/useAuth";
+
 import { FaGoogle } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
 
 const Sociallogin = () => {
     const { signInWithGoogle } = useAuth()
