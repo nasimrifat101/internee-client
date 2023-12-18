@@ -5,6 +5,7 @@ import NavWithSearch from "../reusableNavbar/NavWithSearch";
 const AllUsers = () => {
     const [users, setUsers] = useState([])
     const axiosPublic = useAxiosPublic()
+    const [searchTerm, setSearchTerm] = useState('')
 
     useEffect(() => {
         axiosPublic.get('/users')
@@ -15,16 +16,23 @@ const AllUsers = () => {
                 console.log(err)
             })
     }, [axiosPublic])
+
+    const filteredUsers = users?.filter((usr) =>
+        usr.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div>
-            <NavWithSearch name={`Total Users: ${users.length} `} />
+           <NavWithSearch name={`Total Users: ${users.length} `} value={searchTerm} set={setSearchTerm} />
+
+
             <div>
                 <div className="overflow-x-auto">
                     <table className="table">
                         {/* head */}
                         <thead>
                             <tr>
-                                
+
                                 <th>Name</th>
                                 <th>Job</th>
                                 <th>Favorite Color</th>
@@ -34,9 +42,9 @@ const AllUsers = () => {
                         <tbody>
 
                             {
-                                users?.map((item, idx) => (
+                                filteredUsers?.map((item, idx) => (
                                     <tr key={idx}>
-                                      
+
                                         <td>
                                             <div className="flex items-center gap-3">
                                                 <div className="avatar">
