@@ -4,6 +4,8 @@ import Home from "../pages/home/Home";
 import Login from "../pages/components/Auth/Login";
 import Signup from "../pages/components/Auth/Signup";
 import NotFound from "../pages/Errors/NotFound";
+import Dashboard from "../layout/Dashboard";
+
 
 const router = createBrowserRouter([
   {
@@ -15,13 +17,23 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       },
+
       {
         path: '/login',
-        element:<Login></Login>
+        element: <Login></Login>
       },
       {
         path: '/signup',
-        element:<Signup></Signup>
+        element: <Signup></Signup>
+      },
+
+      // dashboard
+      {
+        path: '/dashboard',
+        element: <Dashboard></Dashboard>,
+        children:[
+          {}
+        ]
       }
     ],
   },

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { RiHome2Fill } from "react-icons/ri";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -9,7 +10,7 @@ import useAuth from "../../../hooks/useAuth";
 
 const Login = () => {
       const { signIn } = useAuth();
-    //   const navigate = useNavigate();
+      const navigate = useNavigate();
     const {
         register,
         formState: { errors },
@@ -21,7 +22,7 @@ const Login = () => {
         try {
             console.log(data)
               await signIn(data.email, data.password);
-            //   navigate(location?.state ? location.state : "/");
+              navigate('/dicide');
         } catch (error) {
             console.error("Login failed:", error);
             toast.error("Invalid email or password. Please try again.");
