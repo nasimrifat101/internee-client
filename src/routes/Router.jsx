@@ -5,6 +5,7 @@ import Login from "../pages/components/Auth/Login";
 import Signup from "../pages/components/Auth/Signup";
 import NotFound from "../pages/Errors/NotFound";
 import Dashboard from "../layout/Dashboard";
+import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 
 
 const router = createBrowserRouter([
@@ -32,7 +33,11 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element: <Dashboard></Dashboard>,
         children:[
-          {}
+          // admin route
+          {
+            path: '/dashboard/allusers',
+            element: <AllUsers></AllUsers>
+          }
         ]
       }
     ],
